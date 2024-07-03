@@ -2,7 +2,7 @@
 
 En la página de play with docker me dirijo al según stage en el que tengo los siguientes laboratorios:
 
-![Descripción](Imagenes5/4.png)
+![Descripción](./Imagenes5/4.PNG)
 
 Comienzo con el primero que es de perfiles de Seccomp y después continuo con los demás
 
@@ -25,7 +25,7 @@ Desde Docker 1.12 o superior:
 docker info | grep seccomp
 ```
 
-![Descripción](Imagenes6/Captura2.png)
+![Descripción](Imagenes6/Captura2.PNG)
 
 Si no obtengo una línea que mencione "seccomp" en la salida, significa que seccomp no está habilitado en el kernel de mí sistema.
 
@@ -35,7 +35,7 @@ Desde la línea de comandos de Linux:
 grep SECCOMP /boot/config-$(uname -r)
 ```
 
-![Descripción](Imagenes6/Captura4.png)
+![Descripción](Imagenes6/Captura4.PNG)
 
 Esto me debería mostrarar la configuración actual del kernel relacionada con seccomp. Pero por alguna razón que desconozco presenta ese error con que no puede encontrar el archivo. No encontré la forma de como solucionarlo.
 
@@ -50,7 +50,7 @@ Primero, debo clonar el repositorio de GitHub del laboratorio para acceder a los
 git clone https://github.com/docker/labs
 ```
 
-![Descripción](Imagenes6/Captura1.png)
+![Descripción](Imagenes6/Captura1.PNG)
 
 Cambio al directorio labs/security/seccomp:
 
@@ -58,7 +58,7 @@ Cambio al directorio labs/security/seccomp:
 cd labs/security/seccomp
 ```
 
-![Descripción](Imagenes6/Captura3.png)
+![Descripción](Imagenes6/Captura3.PNG)
 
 Los pasos siguientes asumirán que estoy ejecutando comandos desde este directorio, lo cual es importante para referenciar los perfiles seccomp en los comandos docker run a lo largo del laboratorio.
 
@@ -317,7 +317,7 @@ El kernel de Linux prefija todas las constantes de capacidades con "CAP_". Por e
    docker run --rm -it alpine chown nobody /
    ```
 
-   ![Descripción](Imagenes3/Captura2.png)
+   ![Descripción](Imagenes3/Captura2.PNG)
 
    El comando no devuelve un código de retorno, lo que indica que la operación fue exitosa debido a que los nuevos contenedores se inician con un usuario root y este usuario tiene la capacidad CAP_CHOWN de forma predeterminada.
 
@@ -327,7 +327,7 @@ El kernel de Linux prefija todas las constantes de capacidades con "CAP_". Por e
    docker run --rm -it --cap-drop ALL --cap-add CHOWN alpine chown nobody /
    ```
 
-   ![Descripción](Imagenes3/Captura3.png)
+   ![Descripción](Imagenes3/Captura3.PNG)
 
    Este comando tampoco devuelve un código de retorno, indicando un funcionamiento exitoso. Aunque todas las capacidades fueron eliminadas para la cuenta root del contenedor, se añadió la capacidad `chown` nuevamente, lo que es suficiente para cambiar la propiedad de un archivo.
 
@@ -337,7 +337,7 @@ El kernel de Linux prefija todas las constantes de capacidades con "CAP_". Por e
    docker run --rm -it --cap-drop CHOWN alpine chown nobody /
    ```
 
-   ![Descripción](Imagenes3/Captura4.png)
+   ![Descripción](Imagenes3/Captura4.PNG)
 
    Esta vez, el comando devuelve un código de error, indicando que falló. Esto se debe a que la cuenta root del contenedor no tiene la capacidad `CHOWN` y por lo tanto no puede cambiar la propiedad de un archivo o directorio.
 
@@ -347,7 +347,7 @@ El kernel de Linux prefija todas las constantes de capacidades con "CAP_". Por e
    docker run --rm -it --cap-add CHOWN -u nobody alpine chown nobody /
    ```
 
-   ![Descripción](Imagenes3/Captura5.png)
+   ![Descripción](Imagenes3/Captura5.PNG)
 
    El comando anterior falla porque Docker actualmente no admite agregar capacidades a usuarios no root.
 
@@ -379,7 +379,7 @@ docker run --rm -it alpine sh -c 'apk add -U libcap; capsh --print'
 
 Aquí está el texto corregido y ajustado:
 
-![Descripción](Imagenes3/Captura6.png)
+![Descripción](Imagenes3/Captura6.PNG)
 
 **Experimentando con capacidades**
 El comando `capsh` puede ser útil para experimentar con capacidades. `capsh --help` muestra cómo usar el comando:
@@ -388,7 +388,7 @@ El comando `capsh` puede ser útil para experimentar con capacidades. `capsh --h
 docker run --rm -it alpine sh -c 'apk add -U libcap; capsh --help'
 ```
 
-![Descripción](Imagenes3/Captura7.png)
+![Descripción](Imagenes3/Captura7.PNG)
 
 ### Modificación de capacidades
 
@@ -479,7 +479,7 @@ Ejecutar el comando `docker network ls` para ver las redes de contenedores exist
 docker network ls
 ```
 
-![Descripción](Imagenes5/Captura2.png)
+![Descripción](Imagenes5/Captura2.PNG)
 
 La salida muestra las redes de contenedores que se crean como parte de una instalación estándar de Docker.
 
@@ -644,7 +644,7 @@ Toda instalación nueva de Docker incluye una red predefinida llamada "bridge". 
 docker network ls
 ```
 
-![Descripcion](Imagenes5/Captura3.png)
+![Descripcion](Imagenes5/Captura3.PNG)
 
 La salida muestra que la red "bridge" está asociada con el controlador "bridge". Es importante notar que la red y el controlador están conectados, pero no son lo mismo, aunque en este caso tengan el mismo nombre.
 
@@ -657,7 +657,7 @@ apk update
 apk add bridge
 ```
 
-![Descripcion](Imagenes5/Captura4.png)
+![Descripcion](Imagenes5/Captura4.PNG)
 
 Luego, lista los puentes en tu host Docker con `brctl show`.
 
@@ -665,7 +665,7 @@ Luego, lista los puentes en tu host Docker con `brctl show`.
 brctl show
 ```
 
-![Descripcion](Imagenes5/Captura5.png)
+![Descripcion](Imagenes5/Captura5.PNG)
 
 La salida muestra un solo puente de Linux llamado `docker0`, que se creó automáticamente para la red "bridge". Actualmente no tiene interfaces conectadas.
 
@@ -708,7 +708,7 @@ Por ejemplo, Creo un nuevo contenedor ejecutando:
 docker run -dt ubuntu sleep infinity
 ```
 
-![Descripcion](Imagenes5/Captura6.png)
+![Descripcion](Imagenes5/Captura6.PNG)
 
 Este comando crea un nuevo contenedor basado en la imagen `ubuntu:latest` y ejecuta el comando `sleep` para mantener el contenedor en segundo plano. Puedeo verificar que el contenedor está activo con `docker ps`.
 
@@ -716,7 +716,7 @@ Este comando crea un nuevo contenedor basado en la imagen `ubuntu:latest` y ejec
 docker ps
 ```
 
-![Descripcion](Imagenes5/Captura7.png)
+![Descripcion](Imagenes5/Captura7.PNG)
 
 Como no se especificó una red en el comando `docker run`, el contenedor se añadió a la red "bridge".
 
@@ -726,7 +726,7 @@ Ejecuto nuevamente `brctl show`.
 brctl show
 ```
 
-![Descripcion](Imagenes5/Captura8.png)
+![Descripcion](Imagenes5/Captura8.PNG)
 
 Ahora el puente `docker0` tiene una interfaz conectada, que conecta el puente al nuevo contenedor creado.
 
@@ -798,7 +798,7 @@ Ahora hago ping a la dirección IP del contenedor desde la consola de mí host D
 ping -c5 172.17.0.2
 ```
 
-![Descripcion](Imagenes5/Captura9.png)
+![Descripcion](Imagenes5/Captura9.PNG)
 
 Las respuestas muestran que el host Docker puede hacer ping al contenedor a través de la red "bridge". También puedo verificar que el contenedor puede conectarse al mundo exterior. Iniciando sesión en el contenedor, para ello instalo el programa `ping` y haga ping a `www.github.com`.
 
@@ -808,7 +808,7 @@ Primero, obtengo el ID del contenedor creado en el paso anterior con `docker ps`
 docker ps
 ```
 
-![Descripcion](Imagenes5/Captura10.png)
+![Descripcion](Imagenes5/Captura10.PNG)
 
 Luego, inicia una shell dentro de ese contenedor con `docker exec -it <CONTAINER ID> /bin/bash`.
 
@@ -816,7 +816,7 @@ Luego, inicia una shell dentro de ese contenedor con `docker exec -it <CONTAINER
 docker exec -it 14c90008ab79 /bin/bash
 ```
 
-![Descripcion](Imagenes5/Captura11.png)
+![Descripcion](Imagenes5/Captura11.PNG)
 
 Continuo instalando el programa `ping` ejecutando `apt-get update && apt-get install -y iputils-ping`.
 
@@ -911,7 +911,7 @@ Finalmente, desconecta la shell del contenedor con `exit`.
 exit
 ```
 
-![Descripcion](Imagenes5/Captura12.png)
+![Descripcion](Imagenes5/Captura12.PNG)
 
 Ahora debería detener este contenedor para limpiar después de la prueba ejecutando `docker stop <CONTAINER ID>`.
 
@@ -919,7 +919,7 @@ Ahora debería detener este contenedor para limpiar después de la prueba ejecut
 docker stop yourcontainerid
 ```
 
-![Descripcion](Imagenes5/Captura13.png)
+![Descripcion](Imagenes5/Captura13.PNG)
 
 Esto muestra que el nuevo contenedor puede hacer ping a Internet y, por lo tanto, tiene una configuración de red válida y funcional.
 
@@ -960,7 +960,7 @@ Reviso el estado del contenedor y los mapeos de puertos ejecutando `docker ps`.
 docker ps
 ```
 
-![Descripcion](Imagenes5/Captura14.png)
+![Descripcion](Imagenes5/Captura14.PNG)
 
 La primera línea muestra el nuevo contenedor `web1` ejecutando NGINX. Observo el comando que está ejecutando el contenedor y el mapeo de puertos: `0.0.0.0:8080->80/tcp` mapea el puerto 8080 en todas las interfaces del host al puerto 80 dentro del contenedor `web1`. Este mapeo de puertos hace que el servicio web del contenedor sea accesible desde fuentes externas (a través de la dirección IP del host Docker en el puerto 8080).
 
@@ -1020,7 +1020,7 @@ Ejecuto `docker swarm init --advertise-addr $(hostname -i)`.
 docker swarm init --advertise-addr $(hostname -i)
 ```
 
-![Descripcion](Imagenes5/Captura15.png)
+![Descripcion](Imagenes5/Captura15.PNG)
 
 En la primera terminal, copio el comando `docker swarm join ...` que se muestra como parte de la salida de mí terminal. Luego, pego el comando copiado en la segunda terminal.
 
@@ -1030,7 +1030,7 @@ docker swarm join \
 >     10.0.0.5:2377
 ```
 
-![Descripcion](Imagenes5/Captura16.png)
+![Descripcion](Imagenes5/Captura16.PNG)
 
 
 Ejecuto `docker node ls` para verificar que ambos nodos son parte del Swarm.
@@ -1039,7 +1039,7 @@ Ejecuto `docker node ls` para verificar que ambos nodos son parte del Swarm.
 docker node ls
 ```
 
-![Descripcion](Imagenes5/Captura17.png)
+![Descripcion](Imagenes5/Captura17.PNG)
 
 Los valores de ID y HOSTNAME pueden ser diferentes en el laboratorio. Lo importante es verificar que ambos nodos han unido el Swarm y están listos y activos.
 
@@ -1053,7 +1053,7 @@ Creo una nueva red overlay llamada “overnet” ejecutando `docker network crea
 docker network create -d overlay overnet
 ```
 
-![Descripcion](Imagenes5/Captura18.png)
+![Descripcion](Imagenes5/Captura18.PNG)
 
 Utilizo el comando `docker network ls` para verificar que la red se creó exitosamente.
 
@@ -1061,7 +1061,7 @@ Utilizo el comando `docker network ls` para verificar que la red se creó exitos
 docker network ls
 ```
 
-![Descripcion](Imagenes5/Captura19.png)
+![Descripcion](Imagenes5/Captura19.PNG)
 
 La nueva red “overnet” se muestra en la última línea de la salida anterior. Observo que está asociada con el controlador overlay y está abarcando todo el Swarm.
 
@@ -1073,7 +1073,7 @@ Ejecuto el mismo comando `docker network ls` desde la segunda terminal.
 docker network ls
 ```
 
-![Descripcion](Imagenes5/Captura19.png)
+![Descripcion](Imagenes5/Captura19.PNG)
 
  La red “overnet” no aparece en la lista. Esto se debe a que Docker solo extiende las redes overlay a los hosts cuando son necesarias. Esto suele ocurrir cuando un host ejecuta una tarea de un servicio que se ha creado en la red. 
 
@@ -1135,7 +1135,7 @@ docker service create --name myservice \
 ubuntu sleep infinity
 ```
 
-![Descripcion](Imagenes5/Captura21.png)
+![Descripcion](Imagenes5/Captura21.PNG)
 
 Verifico que el servicio se creó y que ambas réplicas están activas ejecutando `docker service ls`.
 
@@ -1178,7 +1178,7 @@ Ahora que el segundo nodo está ejecutando una tarea en la red “overnet”, po
 docker network ls
 ```
 
-![Descripcion](Imagenes5/Captura22.png)
+![Descripcion](Imagenes5/Captura22.PNG)
 
 También puedo ejecutar `docker network inspect overnet` en la segunda terminal para obtener más información detallada sobre la red “overnet” y obtener la dirección IP de la tarea que se está ejecutando en el segundo terminal.
 
@@ -1340,7 +1340,7 @@ Ejecuto el comando `docker ps` para obtener el ID de la tarea del servicio para 
 docker ps
 ```
 
-![Descripcion](Imagenes5/Captura24.png)
+![Descripcion](Imagenes5/Captura24.PNG)
 
 Inicio sesión en la tarea del servicio usando el ID del contenedor de mí entorno:
 
@@ -1348,7 +1348,7 @@ Inicio sesión en la tarea del servicio usando el ID del contenedor de mí entor
 docker exec -it <CONTAINER ID> /bin/bash
 ```
 
-![Descripcion](Imagenes5/Captura25.png)
+![Descripcion](Imagenes5/Captura25.PNG)
 
 Instalo el comando `ping` y hago ping a la tarea del servicio que se ejecuta en el segundo nodo con la dirección IP 10.0.0.3:
 
@@ -1429,7 +1429,7 @@ docker exec -it <CONTAINER ID> /bin/bash
 cat /etc/resolv.conf
 ```
 
-![Descripcion](Imagenes5/Captura27.png)
+![Descripcion](Imagenes5/Captura27.PNG)
 
 El valor que nos interesa es `nameserver 127.0.0.11`, que envía todas las consultas DNS a un resolutor DNS embebido que se ejecuta dentro del contenedor en `127.0.0.11:53`. Todos los contenedores Docker ejecutan un servidor DNS embebido en esta dirección.
 
@@ -1462,7 +1462,7 @@ Salgo del contenedor con el comando `exit` y regreso al prompt del shell de mí 
 exit
 ```
 
-![Descripcion](Imagenes5/Captura28.png)
+![Descripcion](Imagenes5/Captura28.PNG)
 
 Inspecciono la configuración del servicio `myservice` para verificar que el valor VIP coincida con el valor devuelto por el comando `ping -c5 myservice`:
 
@@ -1607,7 +1607,7 @@ Elimino el servicio llamado `myservice`:
 docker service rm myservice
 ```
 
-![Descripcion](Imagenes5/Captura29.png)
+![Descripcion](Imagenes5/Captura29.PNG)
 
 Obtengo una lista de los contenedores en ejecución:
 
@@ -1615,7 +1615,7 @@ Obtengo una lista de los contenedores en ejecución:
 docker ps
 ```
 
-![Descripcion](Imagenes5/Captura30.png)
+![Descripcion](Imagenes5/Captura30.PNG)
 
 Utilizo el comando `docker kill` para detener los contenedores `ubuntu` y `nginx`:
 
@@ -1623,7 +1623,7 @@ Utilizo el comando `docker kill` para detener los contenedores `ubuntu` y `nginx
 docker kill <CONTAINER ID1> <CONTAINER ID2>
 ```
 
-![Descripcion](Imagenes5/Captura31.png)
+![Descripcion](Imagenes5/Captura31.PNG)
 
 Finalmente, elimina node1 y node2 del Swarm usando el comando `docker swarm leave --force` en ambos nodos:
 
@@ -1631,8 +1631,8 @@ Finalmente, elimina node1 y node2 del Swarm usando el comando `docker swarm leav
 docker swarm leave --force
 ```
 
-![Descripcion](Imagenes5/Captura32.png)
-![Descripcion](Imagenes5/Captura33.png)
+![Descripcion](Imagenes5/Captura32.PNG)
+![Descripcion](Imagenes5/Captura33.PNG)
 
 ## Sección 4 del stage 2: Orquestacion
 
@@ -1649,7 +1649,7 @@ Las aplicaciones del mundo real se despliegan típicamente en múltiples hosts p
 docker run -dt ubuntu sleep infinity
 ```
 
-![Descripcion](Imagenes4/Captura2.png)
+![Descripcion](Imagenes4/Captura2.PNG)
 
 Este comando creará un nuevo contenedor basado en la imagen `ubuntu:latest` y ejecutará el comando `sleep` para mantener el contenedor en ejecución en segundo plano. Puedo verificar que el contenedor está en funcionamiento ejecutando `docker ps` en node1.
 
@@ -1657,7 +1657,7 @@ Este comando creará un nuevo contenedor basado en la imagen `ubuntu:latest` y e
 docker ps
 ```
 
-![Descripcion](Imagenes4/Captura3.png)
+![Descripcion](Imagenes4/Captura3.PNG)
 
 Pero esto solo ocurre en un nodo. ¿Qué pasa si este nodo falla? Bueno, la aplicación simplemente se detiene y no se reinicia. Para restaurar el servicio, tendría que iniciar sesión manualmente en esta máquina y realizar ajustes para ponerla nuevamente en funcionamiento. 
 
@@ -1677,7 +1677,7 @@ Ejecutaré `docker swarm init` en node1:
 docker swarm init --advertise-addr $(hostname -i)
 ```
 
-![Descripcion](Imagenes4/Captura4.png)
+![Descripcion](Imagenes4/Captura4.PNG)
 
 Esto inicializa el Swarm con el nodo actual como Manager. Para agregar un trabajador al Swarm, ejecute el siguiente comando en el nodo trabajador:
 
@@ -1685,7 +1685,7 @@ Esto inicializa el Swarm con el nodo actual como Manager. Para agregar un trabaj
 docker swarm join --token SWMTKN-1-3eph9ynze968wzyt6lrxlhb3alr24fj8e9mynceqnsst23f62w-acs91nfarx0v9aauousy517hr 192.168.0.23:2377
 ```
 
-![Descripcion](Imagenes4/Captura5.png)
+![Descripcion](Imagenes4/Captura5.PNG)
 
 Verifico que node1 se haya configurado correctamente como nodo manager ejecutando `docker info`:
 
@@ -1693,7 +1693,7 @@ Verifico que node1 se haya configurado correctamente como nodo manager ejecutand
 docker info
 ```
 
-![Descripcion](Imagenes4/Captura6.png)
+![Descripcion](Imagenes4/Captura6.PNG)
 
 ```shell
 Client:
@@ -1809,9 +1809,9 @@ docker swarm join \
 10.0.0.5:2377
 ```
 
-![Descripcion](Imagenes4/Captura8.png)
+![Descripcion](Imagenes4/Captura8.PNG)
 
-![Descripcion](Imagenes4/Captura9.png)
+![Descripcion](Imagenes4/Captura9.PNG)
 
 Después de ejecutar esto en node2 y node3, regreso a node1 y verifico que ambos nodos sean parte del Swarm ejecutando `docker node ls`:
 
@@ -1819,7 +1819,7 @@ Después de ejecutar esto en node2 y node3, regreso a node1 y verifico que ambos
 docker node ls
 ```
 
-![Descripcion](Imagenes4/Captura10.png)
+![Descripcion](Imagenes4/Captura10.PNG)
 
 Este comando muestra todos los nodos en el swarm y sus roles. 
 
@@ -1839,7 +1839,7 @@ Desplegaré sleep como un servicio en Docker Swarm.
 docker service create --name sleep-app ubuntu sleep infinity
 ```
 
-![Descripcion](Imagenes4/Captura11.png)
+![Descripcion](Imagenes4/Captura11.PNG)
 
 Verifico que la creación del servicio haya sido recibida por el administrador del Swarm.
 
@@ -1847,7 +1847,7 @@ Verifico que la creación del servicio haya sido recibida por el administrador d
 docker service ls
 ```
 
-![Descripcion](Imagenes4/Captura12.png)
+![Descripcion](Imagenes4/Captura12.PNG)
 
 El estado del servicio puede cambiar algunas veces hasta que esté en funcionamiento. La imagen se descarga desde Docker Store a los otros motores en el Swarm. Una vez descargada, el contenedor entra en estado de ejecución en uno de los tres nodos.
 
@@ -1964,7 +1964,7 @@ $
 
 Necesito sacar `node2` del servicio para mantenimiento. Reviso los contenedores corriendo en `node2`.
 
-![Descripcion](Imagenes4/Captura13.png)
+![Descripcion](Imagenes4/Captura13.PNG)
 
 Luego, desde `node1` (el manager del enjambre), saco `node2` de servicio usando `docker node update --availability drain yournodeid`.
 
@@ -1983,7 +1983,7 @@ $
 docker node update --availability drain yu3hbegvwsdpy9esh9t2lr431
 ```
 
-![Descripcion](Imagenes4/Captura14.png)
+![Descripcion](Imagenes4/Captura14.PNG)
 
 Verifico el estado de los nodos nuevamente.
 
@@ -2000,7 +2000,7 @@ $
 
 El nodo `node2` ahora está en estado de drenaje. Verifico los contenedores en `node2`.
 
-![Descripcion](Imagenes4/Captura15.png)
+![Descripcion](Imagenes4/Captura15.PNG)
 
 No hay contenedores corriendo en `node2`. Finalmente, verifico que los contenedores fueron reprogramados en los otros nodos.
 
@@ -2023,16 +2023,16 @@ Limpieza final: elimino el servicio `sleep-app` de `node1`.
 docker service rm sleep-app
 ```
 
-![Descripcion](Imagenes4/Captura16.png)
+![Descripcion](Imagenes4/Captura16.PNG)
 
 Verifico los contenedores corriendo en `node1`.
 
-![Descripcion](Imagenes4/Captura17.png)
+![Descripcion](Imagenes4/Captura17.PNG)
 
 
 Finalmente, elimino los nodos `node1`, `node2` y `node3` del enjambre usando `docker swarm leave --force`.
 
-![Descripcion](Imagenes4/Captura18.png)
+![Descripcion](Imagenes4/Captura18.PNG)
 
 ```bash
 docker swarm leave --force
@@ -2040,8 +2040,8 @@ docker swarm leave --force
 docker swarm leave --force
 ```
 
-![Descripcion](Imagenes4/Captura19.png)
+![Descripcion](Imagenes4/Captura19.PNG)
 
-![Descripcion](Imagenes4/Captura20.png)
+![Descripcion](Imagenes4/Captura20.PNG)
 
-![Descripcion](Imagenes4/Captura21.png)
+![Descripcion](Imagenes4/Captura21.PNG)
